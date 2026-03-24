@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "task_id": "torax-001",
+  "difficulty": "very-hard",
+  "task_type": "feature",
+
+  "repo": {
+    "name": "google-deepmind/torax",
+    "url": "https://github.com/google-deepmind/torax",
+    "languages": ["Python", "JAX"],
+    "commit_sha": "HEAD~1",
+    "stars_approx": 980
+  },
+
+  "task": {
+    "title": "Add optional QLKNN mode contribution outputs (ITG/TEM/ETG) to CoreTransport and TurbulentTransport",
+    "description": "The QLKNN_7_11 neural network surrogate transport model in TORAX outputs ion and electron heat and particle fluxes decomposed by turbulence mode: Ion Temperature Gradient (ITG), Trapped Electron Mode (TEM), and Electron Temperature Gradient (ETG). However, these per-mode contributions are currently discarded after the QLKNN forward pass and never exposed to users in the simulation output. Your task is to implement optional mode-contribution output fields following the existing pattern established by the BohM-GyroBohmModel. Specifically you must: (1) understand how BohM-GyroBohmModel conditionally saves transport coefficients in torax/transport_model/bohm_gyrobohm.py and replicate this pattern for QLKNN, (2) add 9 optional fields to the CoreTransport and TurbulentTransport dataclasses in torax/core_profiles.py or equivalent output data structures, (3) add an output_mode_contributions boolean flag to the QLKNN RuntimeParams with default False for full backward compatibility, (4) decompose the QLKNN transport coefficients proportionally to mode flux contributions when the flag is enabled in torax/transport_model/qlknn_transport_model.py, and (5) wire the new fields through the simulation output system so they appear in saved results. The agent must understand the full data flow from QLKNN forward pass → transport coefficient assembly → CoreTransport population → simulation state → file output, spanning 6 files across the physics model, data structure, config, and I/O layers. The challenge: the JAX functional programming style means all intermediate values must be explicitly threaded through function signatures — you cannot simply set attributes imperatively.",
+    "linked_issue": "https://github.com/google-deepmind/torax/issues/547",
+    "linked_pr": "https://github.com/google-deepmind/torax/pull/1895"
+  },
+
+  "context": {
+    "required_files": [
+      "torax/transport_model/qlknn_transport_model.py",
+      "torax/transport_model/bohm_gyrobohm.py",
+      "torax/transport_model/transport_model.py",
+      "torax/core_profiles.py",
+      "torax/config/runtime_params_slice.py",
+      "torax/output.py",
+      "torax/sim.py",
+      "torax/tests/transport_model_test.py"
+    ],
+    "estimated_tokens": 52000,
+    "num_files_to_modify": 6,
+    "cross_language": false
+  },
+
+  "ground_truth": {
+    "patch_file": "tasks/torax/torax-001.patch",
+    "test_command": "pytest torax/tests/transport_model_test.py -x -q -k 'qlknn'",
+    "acceptance_criteria": "When output_mode_contributions=True, QLKNN simulation outputs contain 9 new fields for ITG/TEM/ETG contributions. When False (default), outputs are identical to pre-patch behavior. All existing transport model tests pass. New fields correctly decompose coefficients proportionally to mode flux contributions."
+  },
+
+  "evaluation": {
+    "scoring": {
+      "full_pass": 1.0,
+      "partial_pass": 0.5,
+      "wrong_files": 0.1,
+      "fail": 0.0
+    },
+    "failure_categories": [
+      "insufficient_context_read",
+      "correct_file_wrong_function",
+      "partial_fix_only",
+      "hallucinated_api",
+      "test_not_updated",
+      "wrong_abstraction_layer"
+    ]
+  },
+
+  "metadata": {
+    "added_by": "ronak",
+    "date_added": "2026-03-22",
+    "verified": false,
+    "notes": "This is Ronak's own merged PR (RONAK-AI647 → google-deepmind:main, Jan 30 2026), praised by the DeepMind mentor. 6 files changed, 140 additions. Tests the agent's ability to trace a feature addition across the JAX functional data flow from physics model to output system — a pattern that requires understanding ALL layers simultaneously because JAX does not allow imperative attribute setting."
+  }
+}
