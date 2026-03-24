@@ -1,0 +1,121 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-22",
+  "description": "Repository registry for the Long-Context Coding Evaluation Dataset (GSoC 2026, Issue #23316). Anchor repos have tasks extracted. Diversity repos are listed for proposal completeness and will receive tasks in the full GSoC project.",
+
+  "anchor_repos": [
+    {
+      "name": "vllm-project/vllm",
+      "url": "https://github.com/vllm-project/vllm",
+      "languages": ["Python", "C++", "CUDA"],
+      "domain": "ML infrastructure / LLM serving",
+      "stars_approx": 73900,
+      "tasks_extracted": 1,
+      "why_selected": "Massive distributed inference system. Bugs span scheduler, worker, attention backend, and platform layers simultaneously. Real Q1 2026 roadmap items. Requires 50k-90k token context.",
+      "contributor": "ronak"
+    },
+    {
+      "name": "google-deepmind/torax",
+      "url": "https://github.com/google-deepmind/torax",
+      "languages": ["Python", "JAX"],
+      "domain": "Scientific computing / plasma physics simulation",
+      "stars_approx": 980,
+      "tasks_extracted": 1,
+      "why_selected": "JAX functional programming forces explicit value threading — agents cannot imperatively set attributes. Bugs must be traced through physics model → data structure → output layers. Only scientific computing repo in dataset.",
+      "contributor": "ronak"
+    },
+    {
+      "name": "learningequality/kolibri",
+      "url": "https://github.com/learningequality/kolibri",
+      "languages": ["Python", "Vue.js", "JavaScript"],
+      "domain": "Offline-first educational platform",
+      "stars_approx": 1100,
+      "tasks_extracted": 1,
+      "why_selected": "Only full-stack cross-language repo in dataset. Bugs spanning Django + Morango sync engine + Vue.js frontend require reading Python and JavaScript simultaneously. Used in 200+ countries.",
+      "contributor": "ronak"
+    },
+    {
+      "name": "kubeedge/ianvs",
+      "url": "https://github.com/kubeedge/ianvs",
+      "languages": ["Python"],
+      "domain": "Edge AI benchmarking framework",
+      "stars_approx": 430,
+      "tasks_extracted": 1,
+      "why_selected": "Contributor built a full dataset and benchmarking pipeline here as LFX mentee. Deep knowledge of the plugin architecture (scenario→testenv→algorithm→dataset→metrics). Directly relevant to this GSoC project.",
+      "contributor": "ronak (LFX mentee)"
+    },
+    {
+      "name": "langchain-ai/langchain-google",
+      "url": "https://github.com/langchain-ai/langchain-google",
+      "languages": ["Python"],
+      "domain": "LLM tooling / Google AI integration",
+      "stars_approx": 720,
+      "tasks_extracted": 1,
+      "why_selected": "Tasks span two packages simultaneously (genai + vertexai). hallucinated_api is the guaranteed failure mode because SDK class names differ completely between old and new Google AI SDKs. Real user crash with full stack trace.",
+      "contributor": "ronak"
+    },
+    {
+      "name": "meshery/meshery",
+      "url": "https://github.com/meshery/meshery",
+      "languages": ["Go", "JavaScript", "React", "GraphQL"],
+      "domain": "Cloud native infrastructure management / CNCF project",
+      "stars_approx": 6800,
+      "tasks_extracted": 1,
+      "why_selected": "Only Go+React+GraphQL repo in dataset. Three-language fix required (Go backend, GraphQL schema, React frontend). GraphQL subscription pattern not present in any other task. CNCF project with enterprise production use.",
+      "contributor": "ronak"
+    }
+  ],
+
+  "diversity_repos": [
+    {
+      "name": "rust-lang/rust",
+      "url": "https://github.com/rust-lang/rust",
+      "languages": ["Rust"],
+      "domain": "Systems programming / compiler",
+      "stars_approx": 100000,
+      "tasks_extracted": 0,
+      "why_selected": "Compiler codebase requires understanding AST, type checker, borrow checker, and code generation simultaneously. Extreme long-context requirement. Only systems/compiler language in the full dataset.",
+      "planned_task_types": ["bug_fix", "feature"]
+    },
+    {
+      "name": "vercel/next.js",
+      "url": "https://github.com/vercel/next.js",
+      "languages": ["JavaScript", "TypeScript", "Rust"],
+      "domain": "Full-stack web framework",
+      "stars_approx": 129000,
+      "tasks_extracted": 0,
+      "why_selected": "Monorepo spanning 300+ packages. Bugs in the App Router require understanding Next.js server, React server components, and the Turbopack Rust bundler simultaneously. Dominant enterprise web framework.",
+      "planned_task_types": ["bug_fix", "performance"]
+    },
+    {
+      "name": "pytorch/pytorch",
+      "url": "https://github.com/pytorch/pytorch",
+      "languages": ["Python", "C++", "CUDA"],
+      "domain": "ML framework",
+      "stars_approx": 87000,
+      "tasks_extracted": 0,
+      "why_selected": "Autograd engine bugs require reading Python frontend, C++ dispatcher, CUDA kernels, and test suite simultaneously. Industry-standard ML framework with 6M+ lines of code.",
+      "planned_task_types": ["bug_fix", "performance", "feature"]
+    }
+  ],
+
+  "dataset_statistics": {
+    "total_anchor_repos": 6,
+    "total_diversity_repos": 3,
+    "total_tasks_extracted": 6,
+    "languages_covered": ["Python", "C++", "CUDA", "JAX", "Vue.js", "JavaScript", "Go", "React", "GraphQL", "Rust"],
+    "domains_covered": [
+      "ML infrastructure",
+      "Scientific computing",
+      "Offline-first web platform",
+      "Edge AI benchmarking",
+      "LLM tooling",
+      "Cloud native infrastructure",
+      "Systems programming",
+      "Web framework",
+      "ML framework"
+    ],
+    "average_estimated_tokens": 74333,
+    "tasks_with_cross_language_requirement": 2
+  }
+}
