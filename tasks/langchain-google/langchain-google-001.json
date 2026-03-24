@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "task_id": "langchain-google-001",
+  "difficulty": "very-hard",
+  "task_type": "bug_fix",
+
+  "repo": {
+    "name": "langchain-ai/langchain-google",
+    "url": "https://github.com/langchain-ai/langchain-google",
+    "languages": ["Python"],
+    "commit_sha": "HEAD~1",
+    "stars_approx": 720
+  },
+
+  "task": {
+    "title": "Add anyOf schema support for Union types in Gemini tool calling across langchain-google-genai and langchain-google-vertexai",
+    "description": "Tool calling with Gemini through both the genai and vertexai backends silently breaks when any tool argument uses a Python Union type (e.g. Optional[date | datetime], Union[str, Helper], P1 | P2). In langchain_google_vertexai, the API returns a hard crash: 'InvalidArgument: Unable to submit request because one or more function parameters did not specify the schema type field' (issue #463). In langchain_google_genai, no error is raised but only the last variant of the Union is sent to Gemini — silently dropping all other types (issue #986). Both failures have the same root cause: the schema conversion functions do not handle anyOf, which is the JSON Schema mechanism for representing Union types. Your task is to fix both packages: (1) In libs/langchain_google_genai/_function_utils.py, modify _get_properties_from_schema to detect anyOf keys in the JSON schema and convert each variant into a separate schema entry instead of ignoring non-last variants, (2) In libs/langchain_google_vertexai/functions_utils.py, modify _format_json_schema_to_gapic to handle arbitrary anyOf types and convert them to gapic.Schema compatible structures, (3) In both packages' chat_models.py, update the bind_tools docstring to document the new Union type support, (4) Add comprehensive unit tests in both test_function_utils.py files covering: simple Union types, Union with primitives, nested Union types (e.g. List[Union[str, Contact]]), Pydantic Field with Union types, and preserve backward compatibility for nullable Optional fields. The critical complexity: the anyOf fix must NOT break existing Optional handling — Optional[X] is Sugar for Union[X, None] and must still be treated as nullable, not as anyOf. The agent must read both packages' schema conversion pipelines in parallel and understand how gapic.Schema differs from the genai schema format before writing any code.",
+    "linked_issue": "https://github.com/langchain-ai/langchain-google/issues/463",
+    "linked_pr": "https://github.com/langchain-ai/langchain-google/pull/992"
+  },
+
+  "context": {
+    "required_files": [
+      "libs/langchain_google_genai/_function_utils.py",
+      "libs/langchain_google_genai/chat_models.py",
+      "libs/langchain_google_genai/tests/unit_tests/test_function_utils.py",
+      "libs/langchain_google_vertexai/functions_utils.py",
+      "libs/langchain_google_vertexai/chat_models.py",
+      "libs/langchain_google_vertexai/tests/unit_tests/test_function_utils.py",
+      "libs/langchain_google_genai/_common.py",
+      "libs/langchain_google_vertexai/_utils.py"
+    ],
+    "estimated_tokens": 82000,
+    "num_files_to_modify": 6,
+    "cross_language": false
+  },
+
+  "ground_truth": {
+    "patch_file": "tasks/langchain-google/langchain-google-001.patch",
+    "test_command": "cd libs/langchain_google_genai && make test && cd ../langchain_google_vertexai && make test",
+    "acceptance_criteria": "Union types in tool arguments produce anyOf schema entries instead of single-variant schemas. Optional[X] still treated as nullable not anyOf. ChatVertexAI no longer raises InvalidArgument on Union tool args. ChatGoogleGenerativeAI sends all Union variants to Gemini. All new and existing unit tests pass in both packages."
+  },
+
+  "evaluation": {
+    "scoring": {
+      "full_pass": 1.0,
+      "partial_pass": 0.5,
+      "wrong_files": 0.1,
+      "fail": 0.0
+    },
+    "failure_categories": [
+      "insufficient_context_read",
+      "partial_fix_only",
+      "hallucinated_api",
+      "correct_file_wrong_function",
+      "test_not_updated",
+      "wrong_abstraction_layer"
+    ]
+  },
+
+  "metadata": {
+    "added_by": "ronak",
+    "date_added": "2026-03-22",
+    "verified": false,
+    "notes": "PR #992 by Muhammad Saad, merged by Leonid Kuligin on Jul 17 2025. 681 additions across 6 files. Fixes issues #463 (hard crash on VertexAI) and #986 (silent wrong behavior on genai). This is the best task in the dataset: partial_fix_only is the guaranteed failure mode because the bug exists identically in two packages — an agent that fixes only genai scores 0.5. The Optional vs anyOf distinction is a subtle semantic trap that requires reading both schema conversion pipelines in full."
+  }
+}
