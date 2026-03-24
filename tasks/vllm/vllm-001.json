@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "task_id": "vllm-001",
+  "difficulty": "very-hard",
+  "task_type": "performance",
+
+  "repo": {
+    "name": "vllm-project/vllm",
+    "url": "https://github.com/vllm-project/vllm",
+    "languages": ["Python", "C++", "CUDA"],
+    "commit_sha": "HEAD~1",
+    "stars_approx": 73900
+  },
+
+  "task": {
+    "title": "Replace Python list[int] with numpy-backed TokenArray in V1 Request for GC and memory efficiency",
+    "description": "The vLLM Q1 2026 Roadmap (issue #37077) identifies critical GC overhead and per-token PyLongObject allocations caused by Python list[int] used to manage token data in the V1 engine. Your task is to implement a TokenArray class backed by numpy.ndarray that: (1) pre-allocates contiguous memory and resizes dynamically with O(1) append, (2) fully implements the Sequence[int] interface so it is a drop-in replacement for list[int], (3) replaces _output_token_ids, _all_token_ids, and spec_token_ids in vllm/v1/request.py without breaking downstream compatibility, and (4) upgrades ConstantList type-hinting to Sequence in vllm/sequence.py to remove the strict list type enforcement. You must trace how token IDs flow from the Request object through the V1 scheduler, the engine core, the output processor, and the detokenizer to ensure no downstream code assumes list-specific methods. The TokenArray must also be compatible with the spec_token_ids path used in speculative decoding.",
+    "linked_issue": "https://github.com/vllm-project/vllm/issues/37077",
+    "linked_pr": "https://github.com/vllm-project/vllm/pull/37078"
+  },
+
+  "context": {
+    "required_files": [
+      "vllm/v1/request.py",
+      "vllm/v1/scheduler.py",
+      "vllm/v1/engine/core.py",
+      "vllm/v1/engine/output_processor.py",
+      "vllm/v1/detokenizer.py",
+      "vllm/sequence.py",
+      "vllm/v1/engine/__init__.py",
+      "vllm/outputs.py",
+      "vllm/v1/spec_decode/spec_decode_worker.py",
+      "tests/v1/test_request.py"
+    ],
+    "estimated_tokens": 64000,
+    "num_files_to_modify": 5,
+    "cross_language": false
+  },
+
+  "ground_truth": {
+    "patch_file": "tasks/vllm/vllm-001.patch",
+    "test_command": "pytest tests/v1/test_request.py tests/v1/test_scheduler.py -x -q",
+    "acceptance_criteria": "TokenArray passes all Sequence[int] interface tests. _output_token_ids and _all_token_ids in Request use numpy backing. All V1 engine tests pass with no regressions."
+  },
+
+  "evaluation": {
+    "scoring": {
+      "full_pass": 1.0,
+      "partial_pass": 0.5,
+      "wrong_files": 0.1,
+      "fail": 0.0
+    },
+    "failure_categories": [
+      "insufficient_context_read",
+      "correct_file_wrong_function",
+      "partial_fix_only",
+      "hallucinated_api",
+      "test_not_updated"
+    ]
+  },
+
+  "metadata": {
+    "added_by": "ronak",
+    "date_added": "2026-03-22",
+    "verified": false,
+    "notes": "PR raised by akh64bit — the GSoC 2026 mentor. Directly from Q1 2026 vLLM roadmap. Tests agent's ability to trace a data structure refactor across the entire V1 engine pipeline."
+  }
+}
