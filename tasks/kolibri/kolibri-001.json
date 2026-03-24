@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "task_id": "kolibri-001",
+  "difficulty": "very-hard",
+  "task_type": "feature",
+
+  "repo": {
+    "name": "learningequality/kolibri",
+    "url": "https://github.com/learningequality/kolibri",
+    "languages": ["Python", "Vue.js", "JavaScript"],
+    "commit_sha": "release-v0.14.x",
+    "stars_approx": 1100
+  },
+
+  "task": {
+    "title": "Improve facility sync status reporting to users across Django API, Morango sync operations, and Vue.js frontend",
+    "description": "Kolibri's offline-first architecture relies on Morango — a Django-based peer-to-peer database replication engine — to synchronize facility data between devices. When a sync is running, users see minimal feedback about its progress or failure state. Your task is to improve facility sync status reporting end-to-end across three architectural layers: (1) In the Django backend (kolibri/core/auth/), extend the sync management command and status API endpoint to expose granular Morango sync stage information (INITIALIZING, SERIALIZING, QUEUING, TRANSFERRING, DEQUEUING, DESERIALIZING, CLEANUP) as a structured JSON response, (2) In the Morango sync operations layer (kolibri/core/auth/sync_operations.py and hooks), add a KolibriSyncOperation that captures stage transitions and writes them to the status store, (3) In the Vue.js frontend (kolibri/plugins/device/), update the facility sync status component to poll the new API endpoint and display real-time stage information with progress indicators. The challenge is that these three layers are deeply coupled: Morango's sync pipeline is injected via Django settings using a hook registry pattern (FacilityDataSyncHook), the status must survive across process restarts since syncs run in background tasks, and the Vue component must handle all failure states gracefully. The agent must understand the full Morango sync pipeline, the Kolibri plugin hook system, the Django task queue architecture, and the Vue.js Vuex state management simultaneously — reading across 10+ files before making any change.",
+    "linked_issue": "https://github.com/learningequality/kolibri/issues/9534",
+    "linked_pr": "https://github.com/learningequality/kolibri/pull/9541"
+  },
+
+  "context": {
+    "required_files": [
+      "kolibri/core/auth/management/commands/sync.py",
+      "kolibri/core/auth/sync_operations.py",
+      "kolibri/core/auth/hooks.py",
+      "kolibri/core/auth/api.py",
+      "kolibri/core/tasks/api.py",
+      "kolibri/core/tasks/job.py",
+      "kolibri/plugins/device/assets/src/views/ManageContentPage/SelectNetworkDeviceModal/index.vue",
+      "kolibri/plugins/device/assets/src/views/FacilitiesPage/SyncFacilityModalGroup/index.vue",
+      "kolibri/plugins/device/assets/src/store/facilityConfig/actions.js",
+      "kolibri/plugins/device/assets/src/store/facilityConfig/index.js"
+    ],
+    "estimated_tokens": 68000,
+    "num_files_to_modify": 7,
+    "cross_language": true
+  },
+
+  "ground_truth": {
+    "patch_file": "tasks/kolibri/kolibri-001.patch",
+    "test_command": "pytest kolibri/core/auth/test/test_api.py -k 'sync_status' -x && yarn run test --testPathPattern='FacilitiesPage'",
+    "acceptance_criteria": "Sync status API returns structured stage information for in-progress syncs. Vue frontend displays current sync stage with progress indicator. All existing sync tests pass. Frontend unit tests for the status component pass. Status persists correctly across background task restarts."
+  },
+
+  "evaluation": {
+    "scoring": {
+      "full_pass": 1.0,
+      "partial_pass": 0.5,
+      "wrong_files": 0.1,
+      "fail": 0.0
+    },
+    "failure_categories": [
+      "insufficient_context_read",
+      "missing_cross_language_change",
+      "correct_file_wrong_function",
+      "partial_fix_only",
+      "wrong_abstraction_layer",
+      "test_not_updated"
+    ]
+  },
+
+  "metadata": {
+    "added_by": "ronak",
+    "date_added": "2026-03-22",
+    "verified": false,
+    "notes": "Kolibri is Learning Equality's offline-first education platform used in 200+ countries. This task is uniquely valuable because it is the ONLY task in the dataset requiring a fix spanning Python (Django), a separate sync engine (Morango), AND a Vue.js frontend simultaneously. The missing_cross_language_change failure mode is almost guaranteed — agents that only fix the Django layer will score 0.5 at best. Real PR: #9541 merged into release-v0.14.x."
+  }
+}
