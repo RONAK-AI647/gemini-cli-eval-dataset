@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LongContextEvalTask",
+  "description": "Schema for a single evaluation task in the Long-Context Coding Evaluation Dataset for Gemini CLI (GSoC 2026, Issue #23316)",
+  "type": "object",
+  "required": ["version", "task_id", "difficulty", "task_type", "repo", "task", "context", "ground_truth", "evaluation", "metadata"],
+  "properties": {
+    "version":     { "type": "string", "enum": ["1.0"] },
+    "task_id":     { "type": "string", "pattern": "^[a-z0-9-]+-[0-9]{3}$", "description": "Unique ID: {repo-shortname}-{zero-padded-num}, e.g. vllm-001" },
+    "difficulty":  { "type": "string", "enum": ["medium", "hard", "very-hard"] },
+    "task_type":   { "type": "string", "enum": ["bug_fix", "feature", "refactor", "performance"] },
+
+    "repo": {
+      "type": "object",
+      "required": ["name", "url", "languages", "commit_sha", "stars_approx"],
+      "properties": {
+        "name":         { "type": "string" },
+        "url":          { "type": "string", "format": "uri" },
+        "languages":    { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "commit_sha":   { "type": "string", "description": "Exact commit pinned for reproducibility" },
+        "stars_approx": { "type": "integer" }
+      }
+    },
+
+    "task": {
+      "type": "object",
+      "required": ["title", "description", "linked_issue", "linked_pr"],
+      "properties": {
+        "title":        { "type": "string" },
+        "description":  { "type": "string", "description": "Full natural-language problem statement given to the agent" },
+        "linked_issue": { "type": "string", "format": "uri" },
+        "linked_pr":    { "type": "string", "format": "uri" }
+      }
+    },
+
+    "context": {
+      "type": "object",
+      "required": ["required_files", "estimated_tokens", "num_files_to_modify", "cross_language"],
+      "properties": {
+        "required_files":      { "type": "array", "items": { "type": "string" }, "minItems": 3, "description": "Files the agent MUST read to understand and solve the task" },
+        "estimated_tokens":    { "type": "integer", "minimum": 10000, "description": "Approximate total tokens across required_files" },
+        "num_files_to_modify": { "type": "integer", "minimum": 2, "description": "Number of files the correct fix must touch" },
+        "cross_language":      { "type": "boolean", "description": "True if fix spans multiple programming languages" }
+      }
+    },
+
+    "ground_truth": {
+      "type": "object",
+      "required": ["patch_file", "test_command", "acceptance_criteria"],
+      "properties": {
+        "patch_file":          { "type": "string", "description": "Relative path to the .patch file (git diff of the correct fix)" },
+        "test_command":        { "type": "string", "description": "Shell command to verify the fix" },
+        "acceptance_criteria": { "type": "string", "description": "Human-readable pass condition" }
+      }
+    },
+
+    "evaluation": {
+      "type": "object",
+      "required": ["scoring", "failure_categories"],
+      "properties": {
+        "scoring": {
+          "type": "object",
+          "properties": {
+            "full_pass":    { "type": "number", "const": 1.0 },
+            "partial_pass": { "type": "number", "const": 0.5 },
+            "wrong_files":  { "type": "number", "const": 0.1 },
+            "fail":         { "type": "number", "const": 0.0 }
+          }
+        },
+        "failure_categories": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "insufficient_context_read",
+              "correct_file_wrong_function",
+              "hallucinated_api",
+              "context_window_exceeded",
+              "partial_fix_only",
+              "wrong_abstraction_layer",
+              "missing_cross_language_change",
+              "test_not_updated"
+            ]
+          }
+        }
+      }
+    },
+
+    "metadata": {
+      "type": "object",
+      "required": ["added_by", "date_added", "verified"],
+      "properties": {
+        "added_by":   { "type": "string" },
+        "date_added": { "type": "string", "format": "date" },
+        "verified":   { "type": "boolean", "description": "Set true after eval_runner.py confirms task is solvable and scoreable" }
+      }
+    }
+  }
+}
