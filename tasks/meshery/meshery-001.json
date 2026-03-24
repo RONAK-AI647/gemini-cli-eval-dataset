@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "task_id": "meshery-001",
+  "difficulty": "very-hard",
+  "task_type": "feature",
+
+  "repo": {
+    "name": "meshery/meshery",
+    "url": "https://github.com/meshery/meshery",
+    "languages": ["Go", "JavaScript", "React"],
+    "commit_sha": "HEAD~1",
+    "stars_approx": 6800
+  },
+
+  "task": {
+    "title": "Implement Environment-to-Workspace assignment API endpoint and wire it through GraphQL resolver, database handler, and React UI permissions layer",
+    "description": "Meshery's multi-tenancy model uses Workspaces as the top-level collaboration unit, with Environments (collections of Connections and Credentials) assigned to Workspaces. Currently, the assignment operation between Environments and Workspaces is incomplete: the REST API endpoint exists in handlers/workspace.go but the corresponding database persistence layer in database/handlers/workspaceEnvironment.go does not correctly propagate the assignment to the MeshSync event bus, causing the React UI to show stale environment membership after assignment. Additionally the GraphQL resolver in internal/graphql/resolver/workspace.go does not subscribe to assignment change events, so real-time updates are never pushed to clients. Your task requires: (1) reading and understanding the full Workspace data model in models/meshmodel/core/v1beta1/workspace.go and how it relates to Environment in models/meshmodel/core/v1beta1/environment.go, (2) understanding how the database handler layer in database/handlers/ persists many-to-many relationships and how GORM is used for junction table operations, (3) understanding how Meshery's event bus (internal/broker/ and meshkit's NATS integration) propagates state changes to subscribers, (4) fixing the database handler to publish an assignment event after persisting the junction record, (5) updating the GraphQL subscription resolver to listen for workspace-environment assignment events and push updates to subscribed React clients, (6) updating the React workspace page component in ui/components/WorkspaceComponent/ to correctly re-fetch environment membership on subscription update rather than relying on stale local state. The agent must understand all six layers — data model, database, event bus, GraphQL resolver, GraphQL subscription, and React component — before any fix is correct. A partial fix that only updates the database layer will appear to work but will fail the real-time update test.",
+    "linked_issue": "https://github.com/meshery/meshery/issues/14831",
+    "linked_pr": "https://github.com/meshery/meshery/pull/14761"
+  },
+
+  "context": {
+    "required_files": [
+      "handlers/workspace.go",
+      "handlers/environment.go",
+      "database/handlers/workspaceEnvironmentHandler.go",
+      "database/handlers/workspaceHandler.go",
+      "models/meshmodel/core/v1beta1/workspace.go",
+      "models/meshmodel/core/v1beta1/environment.go",
+      "internal/graphql/resolver/workspace.go",
+      "internal/graphql/schema/schema.graphql",
+      "internal/graphql/model/models_gen.go",
+      "ui/components/WorkspaceComponent/WorkspaceEnvironmentsList.js",
+      "ui/components/WorkspaceComponent/index.js",
+      "ui/utils/workspaceHelpers.js"
+    ],
+    "estimated_tokens": 91000,
+    "num_files_to_modify": 7,
+    "cross_language": true
+  },
+
+  "ground_truth": {
+    "patch_file": "tasks/meshery/meshery-001.patch",
+    "test_command": "cd server && go test ./handlers/... ./database/handlers/... -run TestWorkspaceEnvironment -v && cd ../ui && npx jest components/WorkspaceComponent --passWithNoTests",
+    "acceptance_criteria": "Environment assignment persists to the database correctly. Assignment event is published to the NATS broker after persistence. GraphQL subscription receives the event and pushes update to client. React UI refreshes environment list without requiring a full page reload. All Go handler tests pass. React component tests pass."
+  },
+
+  "evaluation": {
+    "scoring": {
+      "full_pass": 1.0,
+      "partial_pass": 0.5,
+      "wrong_files": 0.1,
+      "fail": 0.0
+    },
+    "failure_categories": [
+      "insufficient_context_read",
+      "missing_cross_language_change",
+      "partial_fix_only",
+      "correct_file_wrong_function",
+      "hallucinated_api",
+      "wrong_abstraction_layer"
+    ]
+  },
+
+  "metadata": {
+    "added_by": "ronak",
+    "date_added": "2026-03-22",
+    "verified": false,
+    "notes": "Meshery is a CNCF project — the only Go+React+GraphQL task in the entire dataset. This is the only task requiring a fix across 3 languages (Go, GraphQL schema, JavaScript/React). missing_cross_language_change is the primary expected failure mode: agents that fix only the Go backend will pass the database test but fail the real-time subscription test. This task introduces the unique GraphQL subscription pattern not present in any other task in the dataset, significantly expanding the benchmark's coverage of real enterprise architectures."
+  }
+}
