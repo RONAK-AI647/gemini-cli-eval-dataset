@@ -12,7 +12,7 @@
       "stars_approx": 73900,
       "tasks_extracted": 1,
       "why_selected": "Massive distributed inference system. Bugs span scheduler, worker, attention backend, and platform layers simultaneously. Real Q1 2026 roadmap items. Requires 50k-90k token context.",
-      "contributor": "ronak"
+      "contributor": "akh64bit"
     },
     {
       "name": "google-deepmind/torax",
@@ -32,7 +32,7 @@
       "stars_approx": 1100,
       "tasks_extracted": 1,
       "why_selected": "Only full-stack cross-language repo in dataset. Bugs spanning Django + Morango sync engine + Vue.js frontend require reading Python and JavaScript simultaneously. Used in 200+ countries.",
-      "contributor": "ronak"
+      "contributor": "misrob"
     },
     {
       "name": "kubeedge/ianvs",
@@ -52,7 +52,7 @@
       "stars_approx": 720,
       "tasks_extracted": 1,
       "why_selected": "Tasks span two packages simultaneously (genai + vertexai). hallucinated_api is the guaranteed failure mode because SDK class names differ completely between old and new Google AI SDKs. Real user crash with full stack trace.",
-      "contributor": "ronak"
+      "contributor": "saad"
     },
     {
       "name": "meshery/meshery",
@@ -62,7 +62,7 @@
       "stars_approx": 6800,
       "tasks_extracted": 1,
       "why_selected": "Only Go+React+GraphQL repo in dataset. Three-language fix required (Go backend, GraphQL schema, React frontend). GraphQL subscription pattern not present in any other task. CNCF project with enterprise production use.",
-      "contributor": "ronak"
+      "contributor": "amit"
     }
   ],
 

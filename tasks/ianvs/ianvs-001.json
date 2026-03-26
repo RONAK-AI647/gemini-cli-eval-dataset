@@ -8,7 +8,7 @@
     "name": "kubeedge/ianvs",
     "url": "https://github.com/kubeedge/ianvs",
     "languages": ["Python"],
-    "commit_sha": "645c83695c14b75f0ba37f53f7b1842b95b09f6f"
+    "commit_sha": "HEAD",
     "stars_approx": 430
   },
 
@@ -30,7 +30,7 @@
       "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testalgorithms/deformable_alg.yaml",
       "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/benchmarkingjob.yaml",
       "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testenv/acc.py",
-      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/requirements.txt"
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/requirements.txt",
       "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/README.md"
     ],
     "estimated_tokens": 48000,

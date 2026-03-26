@@ -8,7 +8,7 @@
     "name": "google-deepmind/torax",
     "url": "https://github.com/google-deepmind/torax",
     "languages": ["Python", "JAX"],
-    "commit_sha": "7f70db5f90d541b01b71487f42f5c63040c14cc5"
+    "commit_sha": "HEAD",
     "stars_approx": 980
   },
 
@@ -28,7 +28,7 @@
       "torax/_src/transport_model/transport_model.py",
       "torax/_src/state.py",
       "torax/_src/output_tools/output.py",
-      "torax/tests/transport_model_test.py"
+      "torax/tests/transport_model_test.py",
       "torax/tests/test_data/test_iterhybrid_predictor_corrector.py"
     ],
     "estimated_tokens": 52000,
@@ -66,3 +66,4 @@
     "notes": "This is Ronak's own merged PR (RONAK-AI647 → google-deepmind:main, Jan 30 2026), praised by the DeepMind mentor. 6 files changed, 140 additions. Tests the agent's ability to trace a feature addition across the JAX functional data flow from physics model to output system — a pattern that requires understanding ALL layers simultaneously because JAX does not allow imperative attribute setting."
   }
 }
+

@@ -8,7 +8,7 @@
     "name": "learningequality/kolibri",
     "url": "https://github.com/learningequality/kolibri",
     "languages": ["Python", "Vue.js", "JavaScript"],
-    "commit_sha": "f05e690cf3e691cc5fe33615f047e3c33d8f37d7",
+    "commit_sha": "HEAD",
     "stars_approx": 1100
   },
 

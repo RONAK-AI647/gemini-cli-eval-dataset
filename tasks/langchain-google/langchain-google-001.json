@@ -8,7 +8,7 @@
     "name": "langchain-ai/langchain-google",
     "url": "https://github.com/langchain-ai/langchain-google",
     "languages": ["Python"],
-    "commit_sha": "cb2e091c1e381072619838c543231b3df7011309",
+    "commit_sha": "HEAD",
     "stars_approx": 720
   },
 
