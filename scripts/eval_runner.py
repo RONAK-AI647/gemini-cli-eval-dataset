@@ -437,11 +437,9 @@ def main():
     args = parser.parse_args()
 
     # Verify bundle exists
-    if not args.dry_run:
-        import shutil
-        if not shutil.which(args.bundle):
-            print(f"\n  ERROR: '{args.bundle}' not found")
-      
+    if not args.dry_run and not Path(args.bundle).exists():
+        print(f"\n  ERROR: bundle not found at {args.bundle}")
+        print("  Run: cd gemini-cli && npm run build && npm run bundle")
         sys.exit(1)
 
     # Verify API key
