@@ -8,7 +8,7 @@
     "name": "kubeedge/ianvs",
     "url": "https://github.com/kubeedge/ianvs",
     "languages": ["Python"],
-    "commit_sha": "HEAD~1",
+    "commit_sha": "645c83695c14b75f0ba37f53f7b1842b95b09f6f"
     "stars_approx": 430
   },
 
@@ -24,13 +24,14 @@
       "core/testcasecontroller/testcasecontroller.py",
       "core/testcasecontroller/algorithm/algorithm.py",
       "core/testenvmanager/testenv/testenv.py",
-      "core/common/log.py",
-      "core/common/utils.py",
-      "core/cmd/cli.py",
-      "examples/llm_simple_qa/testenv/testenv.yaml",
-      "examples/llm_simple_qa/testalgorithms/query-routing/test_queryrouting.py",
-      "docs/proposals/scenarios/llm-benchmarks/llm-benchmarks.md",
-      "examples/robot-dog-delivery/README.md"
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testalgorithms/components/manipulation.py",
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testalgorithms/components/perception.py",
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testalgorithms/components/naive_assembly_process.py",
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testalgorithms/deformable_alg.yaml",
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/benchmarkingjob.yaml",
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/testenv/acc.py",
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/requirements.txt"
+      "examples/industrialEI/single_task_learning_bench/deformable_component_manipulation/README.md"
     ],
     "estimated_tokens": 48000,
     "num_files_to_modify": 8,

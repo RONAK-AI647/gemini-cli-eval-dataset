@@ -147,8 +147,8 @@ def run_gemini_cli(
     try:
         result = subprocess.run(
             [
-                "node", bundle_path,
-                prompt,
+                "gemini",
+                "-p",prompt,
                 "--output-format", "json",
                 "--approval-mode", "yolo",
             ],
@@ -423,7 +423,7 @@ def main():
         description="Eval runner for the Long-Context Coding Evaluation Dataset"
     )
     parser.add_argument(
-        "--bundle", required=True,
+        "--bundle", required=False, default="gemini",
         help="Path to bundle/gemini.js (e.g. /path/to/gemini-cli/bundle/gemini.js)"
     )
     parser.add_argument(

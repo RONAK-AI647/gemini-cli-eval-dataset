@@ -8,7 +8,7 @@
     "name": "vllm-project/vllm",
     "url": "https://github.com/vllm-project/vllm",
     "languages": ["Python", "C++", "CUDA"],
-    "commit_sha": "HEAD~1",
+    "commit_sha": "a55b2fd16e15b74c96df42113b53d593690d336b"
     "stars_approx": 73900
   },
 
@@ -21,16 +21,29 @@
 
   "context": {
     "required_files": [
-      "vllm/v1/request.py",
-      "vllm/v1/scheduler.py",
-      "vllm/v1/engine/core.py",
-      "vllm/v1/engine/output_processor.py",
-      "vllm/v1/detokenizer.py",
-      "vllm/sequence.py",
-      "vllm/v1/engine/__init__.py",
-      "vllm/outputs.py",
-      "vllm/v1/spec_decode/spec_decode_worker.py",
-      "tests/v1/test_request.py"
+      "vllm/distributed/kv_transfer/kv_connector/v1/lmcache_integration/vllm_v1_adapter.py",
+      "vllm/distributed/kv_transfer/kv_connector/v1/p2p/p2p_nccl_connector.py",
+      "vllm/distributed/kv_transfer/kv_connector/v1/example_connector.py",
+      "vllm/distributed/kv_transfer/kv_connector/v1/example_hidden_states_connector.py",
+      "vllm/v1/core/sched/async_scheduler.py",
+      "vllm/v1/core/sched/output.py",
+      "vllm/v1/core/sched/scheduler.py",
+      "vllm/v1/sample/logits_processor/__init__.py",
+      "vllm/v1/sample/logits_processor/builtin.py",
+      "vllm/v1/sample/logits_processor/interface.py",
+      "vllm/v1/sample/ops/bad_words.py",
+      "vllm/v1/sample/ops/penalties.py"
+      "vllm/v1/sample/metadata.py"
+      "vllm/v1/sample/rejection_sampler.py"
+      "vllm/v1/sample/sampler.py"
+      "vllm/v1/structured_output/__init__.py"
+      "vllm/v1/worker/gpu/mm/rope.py"
+      "vllm/v1/worker/gpu/states.py"
+      "vllm/v1/worker/gpu_model_runner.py"
+      "vllm/v1/worker/tpu_input_batch.py"
+      "vllm/v1/request.py"
+      "vllm/v1/utils.py"
+ 
     ],
     "estimated_tokens": 64000,
     "num_files_to_modify": 5,
@@ -63,6 +76,6 @@
     "added_by": "ronak",
     "date_added": "2026-03-22",
     "verified": false,
-    "notes": "PR raised by akh64bit — the GSoC 2026 mentor. Directly from Q1 2026 vLLM roadmap. Tests agent's ability to trace a data structure refactor across the entire V1 engine pipeline."
+    "notes": "PR raised by akh64bit — gemini-cli. Directly from Q1 2026 vLLM roadmap. Tests agent's ability to trace a data structure refactor across the entire V1 engine pipeline."
   }
 }

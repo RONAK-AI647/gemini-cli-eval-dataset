@@ -2,13 +2,13 @@
   "version": "1.0",
   "task_id": "torax-001",
   "difficulty": "very-hard",
-  "task_type": "feature",
+  "task_type": "feature", 
 
   "repo": {
     "name": "google-deepmind/torax",
     "url": "https://github.com/google-deepmind/torax",
     "languages": ["Python", "JAX"],
-    "commit_sha": "HEAD~1",
+    "commit_sha": "7f70db5f90d541b01b71487f42f5c63040c14cc5"
     "stars_approx": 980
   },
 
@@ -21,14 +21,15 @@
 
   "context": {
     "required_files": [
-      "torax/transport_model/qlknn_transport_model.py",
-      "torax/transport_model/bohm_gyrobohm.py",
-      "torax/transport_model/transport_model.py",
-      "torax/core_profiles.py",
-      "torax/config/runtime_params_slice.py",
-      "torax/output.py",
-      "torax/sim.py",
+      "torax/_src/output_tools/output.py",
+      "torax/_src/transport_model/pydantic_model.py",
+      "torax/_src/transport_model/qlknn_transport_model.py",
+      "torax/_src/transport_model/qualikiz_based_transport_model.py",
+      "torax/_src/transport_model/transport_model.py",
+      "torax/_src/state.py",
+      "torax/_src/output_tools/output.py",
       "torax/tests/transport_model_test.py"
+      "torax/tests/test_data/test_iterhybrid_predictor_corrector.py"
     ],
     "estimated_tokens": 52000,
     "num_files_to_modify": 6,
@@ -59,7 +60,7 @@
   },
 
   "metadata": {
-    "added_by": "ronak",
+    "added_by": "Ronak",
     "date_added": "2026-03-22",
     "verified": false,
     "notes": "This is Ronak's own merged PR (RONAK-AI647 → google-deepmind:main, Jan 30 2026), praised by the DeepMind mentor. 6 files changed, 140 additions. Tests the agent's ability to trace a feature addition across the JAX functional data flow from physics model to output system — a pattern that requires understanding ALL layers simultaneously because JAX does not allow imperative attribute setting."
