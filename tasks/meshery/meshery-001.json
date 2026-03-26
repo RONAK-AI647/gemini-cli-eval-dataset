@@ -8,7 +8,7 @@
     "name": "meshery/meshery",
     "url": "https://github.com/meshery/meshery",
     "languages": ["Go", "JavaScript", "React"],
-    "commit_sha": "HEAD~1",
+    "commit_sha": "2cfa2a62d75e6d6f67cd13098e599752b81033ec",
     "stars_approx": 6800
   },
 
@@ -21,11 +21,11 @@
 
   "context": {
     "required_files": [
-      "handlers/workspace.go",
-      "handlers/environment.go",
-      "database/handlers/workspaceEnvironmentHandler.go",
-      "database/handlers/workspaceHandler.go",
-      "models/meshmodel/core/v1beta1/workspace.go",
+      "server/handlers/workspace_handlers.go",
+      "server/models/default_local_provider.go",
+      "server/models/providers.go",
+      "server/models/remote_provider.go",
+      "server/models/workspace_persister.go",
       "models/meshmodel/core/v1beta1/environment.go",
       "internal/graphql/resolver/workspace.go",
       "internal/graphql/schema/schema.graphql",

@@ -8,7 +8,7 @@
     "name": "langchain-ai/langchain-google",
     "url": "https://github.com/langchain-ai/langchain-google",
     "languages": ["Python"],
-    "commit_sha": "HEAD~1",
+    "commit_sha": "cb2e091c1e381072619838c543231b3df7011309",
     "stars_approx": 720
   },
 
@@ -21,13 +21,12 @@
 
   "context": {
     "required_files": [
-      "libs/langchain_google_genai/_function_utils.py",
-      "libs/langchain_google_genai/chat_models.py",
-      "libs/langchain_google_genai/tests/unit_tests/test_function_utils.py",
-      "libs/langchain_google_vertexai/functions_utils.py",
-      "libs/langchain_google_vertexai/chat_models.py",
-      "libs/langchain_google_vertexai/tests/unit_tests/test_function_utils.py",
-      "libs/langchain_google_genai/_common.py",
+      "libs/genai/langchain_google_genai/_function_utils.py",
+      "libs/genai/langchain_google_genai/chat_models.py",
+      "libs/genai/tests/unit_tests/test_function_utils.py",
+      "libs/vertexai/langchain_google_vertexai/chat_models.py",
+      "libs/vertexai/langchain_google_vertexai/functions_utils.py",
+      "libs/vertexai/tests/unit_tests/test_function_utils.py",
       "libs/langchain_google_vertexai/_utils.py"
     ],
     "estimated_tokens": 82000,

@@ -8,7 +8,7 @@
     "name": "learningequality/kolibri",
     "url": "https://github.com/learningequality/kolibri",
     "languages": ["Python", "Vue.js", "JavaScript"],
-    "commit_sha": "release-v0.14.x",
+    "commit_sha": "f05e690cf3e691cc5fe33615f047e3c33d8f37d7",
     "stars_approx": 1100
   },
 
@@ -21,13 +21,13 @@
 
   "context": {
     "required_files": [
-      "kolibri/core/auth/management/commands/sync.py",
-      "kolibri/core/auth/sync_operations.py",
-      "kolibri/core/auth/hooks.py",
+      "kolibri/core/assets/src/views/sync/FacilityNameAndSyncStatus/__tests__/index.spec.js",
+      "kolibri/core/assets/src/views/sync/FacilityNameAndSyncStatus/index.vue",
+      "kolibri/core/assets/src/views/sync/syncComponentSet.js",
+      "kolibri/core/auth/test/test_api.py",
       "kolibri/core/auth/api.py",
-      "kolibri/core/tasks/api.py",
-      "kolibri/core/tasks/job.py",
-      "kolibri/plugins/device/assets/src/views/ManageContentPage/SelectNetworkDeviceModal/index.vue",
+      "kolibri/plugins/device/assets/src/views/PostSetupModalGroup.vue",
+      "kolibri/plugins/facility/assets/src/modules/manageCSV/index.js",
       "kolibri/plugins/device/assets/src/views/FacilitiesPage/SyncFacilityModalGroup/index.vue",
       "kolibri/plugins/device/assets/src/store/facilityConfig/actions.js",
       "kolibri/plugins/device/assets/src/store/facilityConfig/index.js"
@@ -64,6 +64,6 @@
     "added_by": "ronak",
     "date_added": "2026-03-22",
     "verified": false,
-    "notes": "Kolibri is Learning Equality's offline-first education platform used in 200+ countries. This task is uniquely valuable because it is the ONLY task in the dataset requiring a fix spanning Python (Django), a separate sync engine (Morango), AND a Vue.js frontend simultaneously. The missing_cross_language_change failure mode is almost guaranteed — agents that only fix the Django layer will score 0.5 at best. Real PR: #9541 merged into release-v0.14.x."
+    "notes": "Kolibri is Learning Equality's offline-first education platform used in 200+ countries. This task is uniquely valuable because it is the ONLY task in the dataset requiring a fix spanning Python (Django), a separate sync engine (Morango), AND a Vue.js frontend simultaneously. The missing_cross_language_change failure mode is almost guaranteed — agents that only fix the Django layer will score 0.5 at best. Real PR: #9541 merged into release-v0.14.x.This pr was by misrob-member learning equality"
   }
 }
