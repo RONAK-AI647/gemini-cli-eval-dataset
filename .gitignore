@@ -144,7 +144,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.repo_cache
+
 
 # Spyder project settings
 .spyderproject

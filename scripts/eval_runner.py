@@ -37,7 +37,7 @@ from pathlib import Path
 DATASET_ROOT = Path(__file__).parent.parent
 TASKS_DIR    = DATASET_ROOT / "tasks"
 RESULTS_DIR  = DATASET_ROOT / "results"
-REPO_CACHE   = DATASET_ROOT / ".repo_cache"
+REPO_CACHE   = DATASET_ROOT / "repo_cache"
 
 # ── Scoring constants ────────────────────────────────────────────────────────
 
@@ -158,9 +158,7 @@ def run_gemini_cli(
             timeout=CLI_TIMEOUT,
             env={
                 **os.environ,
-                "HOME": isolated_home,
-                "USERPROFILE": isolated_home,
-                "GEMINI_CONFIG_DIR": os.path.join(isolated_home, ".gemini"),
+        
                 "GEMINI_CLI_INTEGRATION_TEST": "true",
             }
         )
