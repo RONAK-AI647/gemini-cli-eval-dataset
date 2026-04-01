@@ -147,7 +147,7 @@ def run_gemini_cli(
     try:
         result = subprocess.run(
             [
-                "gemini",
+                "node",bundle_path,
                 "-p",prompt,
                 "--output-format", "json",
                 "--approval-mode", "yolo",
