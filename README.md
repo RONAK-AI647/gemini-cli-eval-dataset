@@ -429,6 +429,7 @@ Apache-2.0 — see [LICENSE](./LICENSE)
 **Email**: codeitronak226277@gmail.com  
 **GSoC Mentor**: akh64bit  
 **Repository**: [gemini-cli-eval-dataset](https://github.com/RONAK-AI647/gemini-cli-eval-dataset)
+**Student** : BIT Sindri
 
 ---
 
