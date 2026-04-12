@@ -4,7 +4,7 @@
 
 A rigorous evaluation dataset for stress-testing the Gemini CLI agent on real-world engineering problems that require **genuine long-context reasoning** across large, complex codebases.
 
-![Gemini CLI](docs\images\gemini-cli-hero.png)
+![Gemini CLI](docs/images/gemini-cli-hero.png)
 
 ---
 
